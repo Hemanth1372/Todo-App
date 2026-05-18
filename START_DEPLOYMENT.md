@@ -39,7 +39,7 @@ git branch -M main
 git push -u origin main
 ```
 
-### Step 3: Deploy Backend on Railway
+### Step 3: Deploy Backend on Render
 
 1. Create new project on Railway
 2. Connect your GitHub repo
