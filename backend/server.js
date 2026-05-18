@@ -34,17 +34,6 @@ app.get('/api/health', (req, res) => {
 });
 
 const pool = require("./db");
-
-app.get("/api/db-test", async (req, res) => {
-  try {
-    const result = await pool.query("SELECT NOW()");
-    res.json({ success: true, time: result.rows[0] });
-  } catch (err) {
-    console.error("DB test error:", err);
-    res.status(500).json({ success: false, error: err.message });
-  }
-});
-
 const fs = require("fs");
 const path = require("path");
 
