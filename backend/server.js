@@ -45,6 +45,28 @@ app.get("/api/db-test", async (req, res) => {
   }
 });
 
+app.get("/api/check-tables", async (req, res) => {
+  try {
+    const result = await pool.query(`
+      SELECT table_name
+      FROM information_schema.tables
+      WHERE table_schema = 'public'
+      ORDER BY table_name;
+    `);
+
+    res.json({
+      success: true,
+      tables: result.rows,
+    });
+  } catch (err) {
+    console.error("Check tables error:", err);
+    res.status(500).json({
+      success: false,
+      error: err.message,
+    });
+  }
+});
+
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT} (${process.env.NODE_ENV || 'development'} mode)`);
