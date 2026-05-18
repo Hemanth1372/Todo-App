@@ -34,26 +34,14 @@ app.get('/api/health', (req, res) => {
 });
 
 const pool = require("./db");
-const fs = require("fs");
-const path = require("path");
 
-app.get("/api/init-db", async (req, res) => {
+app.get("/api/db-test", async (req, res) => {
   try {
-    const schemaPath = path.join(__dirname, "schema.sql");
-    const schema = fs.readFileSync(schemaPath, "utf8");
-
-    await pool.query(schema);
-
-    res.json({
-      success: true,
-      message: "Database schema created successfully",
-    });
+    const result = await pool.query("SELECT NOW()");
+    res.json({ success: true, time: result.rows[0] });
   } catch (err) {
-    console.error("Schema init error:", err);
-    res.status(500).json({
-      success: false,
-      error: err.message,
-    });
+    console.error("DB test error:", err);
+    res.status(500).json({ success: false, error: err.message });
   }
 });
 
