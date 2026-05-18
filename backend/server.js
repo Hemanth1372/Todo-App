@@ -45,6 +45,29 @@ app.get("/api/db-test", async (req, res) => {
   }
 });
 
+const fs = require("fs");
+const path = require("path");
+
+app.get("/api/init-db", async (req, res) => {
+  try {
+    const schemaPath = path.join(__dirname, "schema.sql");
+    const schema = fs.readFileSync(schemaPath, "utf8");
+
+    await pool.query(schema);
+
+    res.json({
+      success: true,
+      message: "Database schema created successfully",
+    });
+  } catch (err) {
+    console.error("Schema init error:", err);
+    res.status(500).json({
+      success: false,
+      error: err.message,
+    });
+  }
+});
+
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT} (${process.env.NODE_ENV || 'development'} mode)`);
