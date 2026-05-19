@@ -212,7 +212,7 @@ npm run build
 # Deploy the build folder
 ```
 
-### Backend Deployment (Heroku, Railway, etc.)
+### Backend Deployment (Render, etc.)
 
 1. Update `DATABASE_URL` to production database
 2. Change `JWT_SECRET` to a secure value
